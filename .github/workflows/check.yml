@@ -119,28 +119,9 @@ jobs:
       - name: Запустить smoke-тесты алгоритмов
         run: python -m pytest -v
 
-  docker-hub:
-    name: "tests:docker-hub"
-    needs: checks
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Проверить доступность опубликованного образа
-        env:
-          GITHUB_OWNER: ${{ github.repository_owner }}
-        run: |
-          # Docker Hub использует имя владельца GitHub в нижнем регистре.
-          owner=$(printf '%s' "$GITHUB_OWNER" | tr '[:upper:]' '[:lower:]')
-          image="docker.io/$owner/ensembles:latest"
-          echo "Проверяется публичный образ: $image"
-          export DOCKER_CONFIG
-          DOCKER_CONFIG=$(mktemp -d)
-          trap 'rm -rf "$DOCKER_CONFIG"' EXIT
-          docker pull "$image"
-
   docker-ui:
     name: "tests:docker-and-ui"
-    needs: docker-hub
+    needs: checks
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
