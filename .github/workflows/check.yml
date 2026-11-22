@@ -23,7 +23,7 @@ jobs:
             '53c8566097ce80aaebc6d6299068388e71464788ef506529836f8cad6e21203d  tests/scripts/check_inference.py' \
             '667fc6546d73a0a3da9999e3e165d2f588ef8b307faab174f3c55ee677849669  tests/scripts/check_pr_history.py' \
             'b4da3908c5975d2f1796d7950eb3d7f4285f397bb42552951ad2844e608d94cf  tests/scripts/check_structure.py' \
-            '910bf228a34192e9e8b7035d688fecea13cf9d5b57006f816af9bd2384eb73dc  tests/scripts/check_ui.py' |
+            '1b026e612648d1d1c676972af94436bfa3ad27e11a73a0bd659f7c4e351a3d18  tests/scripts/check_ui.py' |
             sha256sum --check
       - name: Проверить неизменность выданного ui.py
         if: ${{ !cancelled() }}

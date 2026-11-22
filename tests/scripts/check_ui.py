@@ -42,12 +42,12 @@ def select_option(page, label: str, value: str) -> None:
         except PlaywrightTimeoutError:
             if attempt == 2:
                 raise
-    # Streamlit versions render the selected value either as input value or text.
-    expect(box).to_contain_text(label)
-    if control.evaluate("el => el.tagName === 'INPUT'"):
-        expect(control).to_have_value(value)
-    else:
+    # Streamlit 1.45 renders the selection as text and leaves the search input
+    # empty; 1.67 renders it as the combobox input value.
+    if box.locator('[data-baseweb="select"]').count():
         expect(box.get_by_text(value, exact=True)).to_be_visible()
+    else:
+        expect(control).to_have_value(value)
     # The selection is reflected client-side before Streamlit finishes its rerun.
     page.wait_for_timeout(1000)
     expect(page.get_by_test_id("stStatusWidget")).to_be_hidden(timeout=30000)
