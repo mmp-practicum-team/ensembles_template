@@ -88,12 +88,12 @@ jobs:
       - name: Flake8
         if: ${{ !cancelled() }}
         run: |
-          git ls-files -z -- '*.py' |
+          git ls-files -z -- '*.py' ':!:tests/**' ':!:ui.py' |
             xargs -0 -r python -m flake8 --max-line-length=120 --
       - name: Pylint
         if: ${{ !cancelled() }}
         run: |
-          git ls-files -z -- '*.py' |
+          git ls-files -z -- '*.py' ':!:tests/**' ':!:ui.py' |
             xargs -0 -r python -m pylint --max-line-length=120 --disable=C0103,C0114,C0115 --
 
   checks:
